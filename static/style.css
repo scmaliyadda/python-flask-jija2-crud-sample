@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f6f8fa;
+    color: #333;
+    margin: 20px;
+}
+h1 {
+    color: #005b99;
+}
+a {
+    color: #005b99;
+}
+form input[type="text"], form input[type="password"] {
+    padding: 5px;
+    margin: 5px 0;
+    width: 200px;
+}
+form input[type="submit"] {
+    padding: 5px 10px;
+    background: #005b99;
+    color: white;
+    border: none;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    margin: 8px 0;
+}
