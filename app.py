@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 from functools import wraps
 
@@ -70,9 +71,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
         conn = get_db_connection()
-        user = conn.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password)).fetchone()
+        user = conn.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
         conn.close()
-        if user:
+        if user and check_password_hash(user['password'], password):
             session['user'] = user['username']
             session['user_id'] = user['id']
             return redirect(url_for('index'))
@@ -85,12 +86,15 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        hashed_pw = generate_password_hash(password)
         conn = get_db_connection()
-        conn.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
-        conn.commit()
-        conn.close()
-        flash("Account created. Please login.")
-        return redirect(url_for('login'))
+        try:
+            conn.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_pw))
+            conn.commit()
+            flash("Account created. Please login.")
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            flash("Username already exists. Please choose another.")
     return render_template('signup.html')
 
 @app.route('/logout')
@@ -101,3 +105,7 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
