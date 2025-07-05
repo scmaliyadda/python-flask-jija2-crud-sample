@@ -2,22 +2,19 @@
 <html>
 <head>
     <title>Task Manager</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Task Manager</h1>
-
     {% if 'user' in session %}
-        <p>Welcome, {{ session['user'] }} | <a href="{{ url_for('logout') }}">Logout</a></p>
-        <a href="{{ url_for('index') }}">Home</a> |
-        <a href="{{ url_for('add') }}">Add Task</a>
+        <p>Welcome, {{ session['user'] }} | <a href="{{ url_for('auth.logout') }}">Logout</a></p>
+        <a href="{{ url_for('tasks.index') }}">Home</a> |
+        <a href="{{ url_for('tasks.add') }}">Add Task</a>
     {% else %}
-        <a href="{{ url_for('login') }}">Login</a> |
-        <a href="{{ url_for('signup') }}">Sign Up</a>
+        <a href="{{ url_for('auth.login') }}">Login</a> |
+        <a href="{{ url_for('auth.signup') }}">Sign Up</a>
     {% endif %}
-
     <hr>
-
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>
@@ -27,7 +24,6 @@
         </ul>
       {% endif %}
     {% endwith %}
-
     {% block content %}{% endblock %}
 </body>
 </html>

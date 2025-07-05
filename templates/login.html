@@ -2,8 +2,11 @@
 {% block content %}
 <h2>Login</h2>
 <form method="post">
-    Username: <input type="text" name="username" required><br>
-    Password: <input type="password" name="password" required><br>
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
     <input type="submit" value="Login">
 </form>
+<p>Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign up</a></p>
 {% endblock %}
