@@ -45,16 +45,16 @@ task_manager/
 Install requirements:
 ```bash
 pip install -r requirements.txt
-
+```
 ---
 
-## 🛠️ Setup/Run:
+## 🛠️ Setup And Run:
 ```bash
 cd project-folder
 python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt (or pip install Flask , pip install Werkzeug)
+pip install -r requirements.txt # or: pip install Flask Werkzeug
 python init_db.py
 python app.py
-
+```
 Then open: http://localhost:5000
